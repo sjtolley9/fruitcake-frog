@@ -20,20 +20,32 @@ int main(int argc, char *argv[])
 			0
 			);
 
-	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
+	Uint32 elapsedTime = 0, currentTime = SDL_GetTicks(), oldTime = SDL_GetTicks();
 
-	for (int i = 0; i < 255; i++) {
-		SDL_SetRenderDrawColor(renderer, i, 255-i, 0, SDL_ALPHA_OPAQUE);
+	bool playing = true;
+	// For event handling
+	SDL_Event e;
+	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+
+	while (playing) {
+		currentTime = SDL_GetTicks();
+		elapsedTime = currentTime - oldTime;
+		oldTime = currentTime;
+
+		while (SDL_PollEvent(&e) != 0) {
+			if (e.type == SDL_QUIT) {
+				playing = false;
+			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				std::cout << "(" << x << ", " << y << ")" << std::endl;
+			}
+		}
+
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawLine(renderer, 0, 480*i/255, 640, 480);
-
 		SDL_RenderPresent(renderer);
-		SDL_Delay(1000/60);
 	}
 
 	SDL_DestroyWindow(window);
