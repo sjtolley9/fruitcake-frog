@@ -186,8 +186,9 @@ int main(int argc, char *argv[])
 {
 	init();
 
-	LTexture texture1;
+	LTexture texture1, texture2;
 	texture1.loadFromFile("assets/CL_DEMO.png");
+	texture2.loadFromFile("assets/higo.png");
 
 	/*SDL_Init(SDL_INIT_VIDEO);
 
@@ -233,6 +234,7 @@ int main(int argc, char *argv[])
 					//texture1.render(16*i,16*j,&gSpriteClips[13]);
 				}
 			}
+			texture2.render(10,10);
 
 			SDL_RenderPresent( gRenderer );
 		}
