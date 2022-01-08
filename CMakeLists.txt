@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(SOURCE_FILES src/main.cpp)
 set(HEADER_FILES )
@@ -6,11 +6,10 @@ set(PROJ_NAME fcFrog)
 
 project(${PROJ_NAME})
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+add_definitions("-std=c++11")
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
-add_executable(${PROJ_NAME} ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(${PROJ_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+add_executable(${PROJ_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+target_link_libraries(${PROJ_NAME} ${CONAN_LIBS})
