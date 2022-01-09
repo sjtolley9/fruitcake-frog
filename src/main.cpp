@@ -73,6 +73,8 @@ int main(int argc, char *argv[])
 	// For event handling
 	SDL_Event e;
 
+	bool renderDirty = true;
+
 	while (playing) {
 		currentTime = SDL_GetTicks();
 		elapsedTime = currentTime - oldTime;
@@ -89,13 +91,15 @@ int main(int argc, char *argv[])
 
 		// RENDERING
 
-		if (elapsedTime == 0) {
 			SDL_RenderClear( gRenderer );
 
 			splashTexture.render(0,0);
 
 			SDL_RenderPresent( gRenderer );
-		}
+			renderDirty = false;
+
+	std::cout << elapsedTime << " elapsed. Waiting " << (16-elapsedTime) << std::endl;
+	//	SDL_Delay(16-elapsedTime);
 	}
 
 	SDL_DestroyWindow(gWindow);
