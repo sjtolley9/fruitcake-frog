@@ -98,3 +98,11 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
 
 	return mTexture != NULL;
 }
+
+int LTexture::getWidth() {
+	return mWidth;
+}
+
+int LTexture::getHeight() {
+	return mHeight;
+}

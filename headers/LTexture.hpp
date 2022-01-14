@@ -1,5 +1,5 @@
-#ifndef FROG_RENDERER
-#define FROG_RENDERER
+#ifndef FROG_RENDERER_LTEX
+#define FROG_RENDERER_LTEX
 
 #include <iostream>
 #include "SDL.h"
