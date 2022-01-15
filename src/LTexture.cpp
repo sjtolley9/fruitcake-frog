@@ -106,3 +106,11 @@ int LTexture::getWidth() {
 int LTexture::getHeight() {
 	return mHeight;
 }
+
+void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue ) {
+	SDL_SetTextureColorMod( mTexture, red, green, blue );
+}
+
+void LTexture::setAlpha( Uint8 alpha ) {
+	SDL_SetTextureAlphaMod( mTexture, alpha );
+}

@@ -18,6 +18,11 @@ bool Renderer::init() {
 		success = false;
 	} else {
 		// Set texture filtering to linear
+		if ( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
+			std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
+		}
+
+		// Set texture filtering to linear
 		mWindow = SDL_CreateWindow(
 				"Fruitcake Frog",
 				SDL_WINDOWPOS_UNDEFINED,
@@ -51,4 +56,24 @@ bool Renderer::init() {
 	}
 
 	return success;
+}
+
+void Renderer::close() {
+	SDL_DestroyRenderer( mRenderer );
+	SDL_DestroyWindow( mWindow );
+	mWindow = NULL;
+	mRenderer = NULL;
+
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
+void Renderer::clearScreen() {
+	SDL_SetRenderDrawColor( mRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_RenderClear( mRenderer );
+}
+
+void Renderer::presentScreen() {
+	SDL_RenderPresent( mRenderer );
 }

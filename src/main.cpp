@@ -4,100 +4,26 @@
 	This was used to confirm that SDL2 was configured properly with CMake
 */
 
+#define DEBUG_OUTPUT false
+
 #include <iostream>
 #include "SDL.h" 
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "LTexture.hpp"
 #include "Renderer.hpp"
-
-SDL_Window *gWindow;
 
 SDL_Rect gSpriteClips[ 40*31 ];
 
 Renderer frogRenderer;
 
-typedef struct frog_struct {
-	float x;
-	float y;
-	float vx;
-	float vy;
-} frogGuy;
-
 std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-bool init() {
-	bool success = true;
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		std::cout << "Failed to initialize SDL" << std::endl;
-		success = false;
-	} else {
-		// Create SDL window
-		gWindow = SDL_CreateWindow(
-				"Fruitcake Frog",
-				SDL_WINDOWPOS_UNDEFINED,
-				SDL_WINDOWPOS_UNDEFINED,
-				640,
-				480,
-				0
-				);
-		if (gWindow == NULL) {
-			std::cout << "Window could not be created!" << std::endl;	
-			success = false;
-		} else {
-			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
-			if ( gRenderer == NULL ) {
-				std::cout << "Failed to create renderer!" << std::endl;
-				success = false;
-			} else {
-				SDL_SetRenderDrawColor( gRenderer, 0, 0, 0, 255);
-
-				int imgFlags = IMG_INIT_PNG;
-				if ( !( IMG_Init( imgFlags ) & imgFlags ) ) {
-					std::cout << "SDL_image could not initialize" << std::endl;
-					success = false;
-				}
-
-				if ( TTF_Init() == -1) {
-					std::cout << "SDL_ttf could not initialize!" << std::endl;
-				}
-			}
-		}
-	}
-
-	return success;
-}
-
-void close() {
-	// Close Fonts
-	// Free Textures,
-	
-	// Destroy Window
-	SDL_DestroyRenderer( gRenderer );
-	SDL_DestroyWindow(gWindow);
-	gRenderer = NULL;
-	gWindow = NULL;
-
-	TTF_Quit();
-	IMG_Quit();
-	SDL_Quit();
-}
 
 int main()
 {
-	init();
+	frogRenderer.init();
 
-	LTexture splashTexture, fontTexture, fontTexture2;
-	splashTexture.loadFromFile("assets/splash_logo_small.png");
-	gFont = TTF_OpenFont( "assets/lazy.ttf", 28 );
-	if ( gFont == NULL ) {
-		std::cout << "Couldn't load font! " << TTF_GetError() << std::endl;
-	}
-	SDL_Color textColor = { 255, 255, 255, 255};
-
-	fontTexture.loadFromRenderedText( "Fruitcake Frog", textColor );
-	fontTexture2.loadFromRenderedText( alphabet, textColor );
+	int debugCounter = 0;
+	bool debugTick = false;
 
 	Uint32 frameTime = 0, elapsedTime = 0, currentTime = SDL_GetTicks(), oldTime = SDL_GetTicks();
 
@@ -119,20 +45,23 @@ int main()
 
 		// GAME LOGIC
 
-		frameTime = elapsedTime;
+		debugCounter += elapsedTime;
+		if (DEBUG_OUTPUT && debugCounter > 1000) {
+			debugCounter -= 1000;
+			debugTick = true;
+		}
 
 		// RENDERING
+		frogRenderer.clearScreen();
 
-		SDL_RenderClear( gRenderer );
-
-		splashTexture.render(0,0);
-
-		fontTexture.render(640-fontTexture.getWidth(), 480-fontTexture.getHeight());
-		fontTexture2.render(640-fontTexture2.getWidth(), 480-fontTexture.getHeight()-fontTexture2.getHeight());
-
-		SDL_RenderPresent( gRenderer );
+		frogRenderer.presentScreen();
 
 		frameTime = SDL_GetTicks() - currentTime;
+
+		if ( debugTick ) {
+			std::cout << "Elapsed Time: " << elapsedTime << " | Frame Time: " << frameTime << std::endl;
+			debugTick = false;
+		}
 
 		//std::cout << frameTime << " passed in compute. " << 1000/(1+frameTime) << "fps. Waiting " << (16-frameTime) << std::endl;
 		if (frameTime < 16) {
@@ -140,7 +69,7 @@ int main()
 		}
 	}
 
-	close();
+	frogRenderer.close();
 
 	return 0;
 }
