@@ -70,7 +70,7 @@ void Renderer::close() {
 }
 
 void Renderer::clearScreen() {
-	SDL_SetRenderDrawColor( mRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+	SDL_SetRenderDrawColor( mRenderer, 0x00, 0x00, 0x00, 0xFF );
 	SDL_RenderClear( mRenderer );
 }
 

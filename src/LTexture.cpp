@@ -1,5 +1,5 @@
 #include <iostream>
-#include "LTexture.hpp"
+#include "Renderer.hpp"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -12,6 +12,13 @@ LTexture::LTexture() {
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
+}
+
+LTexture::LTexture( SDL_Renderer* renderer, SDL_Texture* texture, int w, int h) {
+	mRenderer = renderer;
+	mTexture = texture;
+	mWidth = w;
+	mHeight = h;
 }
 
 LTexture::~LTexture() {
@@ -71,7 +78,7 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
 		renderQuad.h = clip->h;
 	}
 
-	SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+	SDL_RenderCopyEx( mRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor ) {
@@ -113,4 +120,46 @@ void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue ) {
 
 void LTexture::setAlpha( Uint8 alpha ) {
 	SDL_SetTextureAlphaMod( mTexture, alpha );
+}
+
+TextureManager::TextureManager() {
+	mRenderer = NULL;
+}
+
+TextureManager::~TextureManager() {
+	mRenderer = NULL;
+}
+
+bool TextureManager::init(Renderer* renderer) {
+	mRenderer = renderer;
+
+	return mRenderer != NULL;
+}
+
+LTexture TextureManager::createTexture( std::string path) {
+	SDL_Texture* newTexture = NULL;
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	int w, h;
+	
+	if ( loadedSurface == NULL ) {
+		std::cout << "Unable to load texture at : " << path << std::endl;
+	} else {
+		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+
+		newTexture = SDL_CreateTextureFromSurface( mRenderer->mRenderer, loadedSurface );
+		if ( newTexture == NULL ) {
+			std::cout << "Texture couldn't load" << std::endl;
+		} else {
+			w = loadedSurface->w;
+			h = loadedSurface->h;
+		}
+
+		SDL_FreeSurface( loadedSurface );
+	}
+
+	LTexture fruit( mRenderer->mRenderer, newTexture, w, h );
+
+	fruit.render(0,0);
+
+	return fruit;
 }

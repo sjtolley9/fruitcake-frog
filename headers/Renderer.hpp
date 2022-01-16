@@ -4,12 +4,15 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
+class Renderer;
+
 //Texture wrapper class
 class LTexture
 {
     public:
         //Initializes variables
         LTexture();
+		LTexture( SDL_Renderer*, SDL_Texture*, int w, int h);
 
         //Deallocates memory
         ~LTexture();
@@ -42,10 +45,25 @@ class LTexture
     private:
         //The actual hardware texture
         SDL_Texture* mTexture;
+		SDL_Renderer* mRenderer;
 
         //Image dimensions
         int mWidth;
         int mHeight;
+};
+
+class TextureManager {
+public:
+	TextureManager();
+	~TextureManager();
+
+	bool init(Renderer*);
+	void close();
+
+	LTexture createTexture(std::string path);
+
+private:
+	Renderer* mRenderer;
 };
 
 class Renderer {
@@ -61,6 +79,8 @@ private:
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 	TTF_Font* mFont;
+
+	friend class TextureManager;
 };
 
 #endif
