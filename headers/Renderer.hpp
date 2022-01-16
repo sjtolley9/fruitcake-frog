@@ -1,5 +1,6 @@
 #ifndef FROG_RENDERER
 #define FROG_RENDERER
+#include <vector>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -52,6 +53,23 @@ class LTexture
         int mHeight;
 };
 
+class TextureThing {
+public:
+	TextureThing();
+	TextureThing(int);
+	~TextureThing();
+
+	int textureID;
+	struct {
+		int r;
+		int g;
+		int b;
+	} color;
+	int rotation;
+	int alpha;
+	int options;
+};
+
 class TextureManager {
 public:
 	TextureManager();
@@ -60,10 +78,12 @@ public:
 	bool init(Renderer*);
 	void close();
 
-	LTexture createTexture(std::string path);
+	int createTexture(std::string path);
 
 private:
 	Renderer* mRenderer;
+	std::vector<LTexture*> textureCache;
+	friend class Renderer;
 };
 
 class Renderer {
@@ -75,6 +95,13 @@ public:
 
 	void clearScreen();
 	void presentScreen();
+
+	void setFullscreen();
+	void setScreenSize(int w, int h);
+
+	void renderThing(TextureThing, int x, int y);
+
+	TextureManager textureManager;
 private:
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;

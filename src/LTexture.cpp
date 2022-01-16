@@ -122,6 +122,23 @@ void LTexture::setAlpha( Uint8 alpha ) {
 	SDL_SetTextureAlphaMod( mTexture, alpha );
 }
 
+TextureThing::TextureThing() {
+	textureID = -1;
+	color = {255, 255, 255};
+	alpha = 255;
+	options = 0;
+}
+
+TextureThing::~TextureThing() {
+}
+
+TextureThing::TextureThing(int id) {
+	textureID = id;
+	color = {255, 255, 255};
+	alpha = 255;
+	options = 0;
+}
+
 TextureManager::TextureManager() {
 	mRenderer = NULL;
 }
@@ -136,7 +153,7 @@ bool TextureManager::init(Renderer* renderer) {
 	return mRenderer != NULL;
 }
 
-LTexture TextureManager::createTexture( std::string path) {
+int TextureManager::createTexture( std::string path) {
 	SDL_Texture* newTexture = NULL;
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	int w, h;
@@ -157,9 +174,9 @@ LTexture TextureManager::createTexture( std::string path) {
 		SDL_FreeSurface( loadedSurface );
 	}
 
-	LTexture fruit( mRenderer->mRenderer, newTexture, w, h );
+	LTexture* fruit = new LTexture( mRenderer->mRenderer, newTexture, w, h );
 
-	fruit.render(0,0);
+	textureCache.push_back(fruit);
 
-	return fruit;
+	return textureCache.size()-1;
 }

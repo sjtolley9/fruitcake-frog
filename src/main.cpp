@@ -21,12 +21,9 @@ std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 int main()
 {
 	frogRenderer.init();
-	TextureManager texMan;
 
-	texMan.init(&frogRenderer);
-	LTexture splashLogo = texMan.createTexture("assets/profile.png");
-	LTexture pathTex = texMan.createTexture("assets/path.png");
-	std::cout << splashLogo.getWidth() << "x" << splashLogo.getHeight() << std::endl;
+	TextureThing texThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"));
+
 
 	int debugCounter = 0;
 	bool debugTick = false;
@@ -60,12 +57,8 @@ int main()
 		// RENDERING
 		frogRenderer.clearScreen();
 
-		for (int i = 0; i < 640; i += 16) {
-			for (int j = 0; j < 480; j += 16) {
-				pathTex.render(i,j);
-			}
-		}
-
+		frogRenderer.renderThing(texThing, 0, 0);
+		
 		frogRenderer.presentScreen();
 
 		frameTime = SDL_GetTicks() - currentTime;

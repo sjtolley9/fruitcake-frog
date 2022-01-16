@@ -55,6 +55,8 @@ bool Renderer::init() {
 		}
 	}
 
+	textureManager.init(this);
+
 	return success;
 }
 
@@ -76,4 +78,32 @@ void Renderer::clearScreen() {
 
 void Renderer::presentScreen() {
 	SDL_RenderPresent( mRenderer );
+}
+
+void Renderer::setFullscreen() {
+	SDL_DisplayMode dm;
+	
+	if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
+		std::cout << "Fullscreen error" << std::endl;
+	}
+	
+	SDL_SetWindowSize(mWindow, dm.w, dm.h);
+	SDL_SetWindowFullscreen(mWindow, SDL_WINDOW_FULLSCREEN);
+}
+
+void Renderer::setScreenSize(int w, int h) {
+	SDL_SetWindowSize(mWindow, w, h);
+	SDL_SetWindowFullscreen(mWindow, 0);
+}
+
+void Renderer::renderThing(TextureThing tt, int x, int y) {
+	LTexture* texture = textureManager.textureCache[tt.textureID];
+	if (tt.options & 1) {
+		texture->setColor(tt.color.r, tt.color.g, tt.color.b);
+	}
+	if (tt.options & 2) {
+		texture->setAlpha(tt.alpha);
+	}
+
+	texture->render(x,y);
 }
