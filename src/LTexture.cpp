@@ -139,6 +139,23 @@ TextureThing::TextureThing(int id) {
 	options = 0;
 }
 
+void TextureThing::setColor(int r, int g, int b) {
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	options |= 1;
+}
+
+void TextureThing::setAlpha(int al) {
+	alpha = al;
+	options |= 2;
+}
+
+void TextureThing::setClip(SDL_Rect cl) {
+	clip = cl;
+	options |= 4;
+}
+
 TextureManager::TextureManager() {
 	mRenderer = NULL;
 }
@@ -177,6 +194,7 @@ int TextureManager::createTexture( std::string path) {
 	LTexture* fruit = new LTexture( mRenderer->mRenderer, newTexture, w, h );
 
 	textureCache.push_back(fruit);
+	mTextureCache.push_back(newTexture);
 
 	return textureCache.size()-1;
 }

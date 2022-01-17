@@ -59,15 +59,21 @@ public:
 	TextureThing(int);
 	~TextureThing();
 
+	void setColor(int,int,int);
+	void setAlpha(int);
+	void setRotation(double);
+	void setClip(SDL_Rect);
+
 	int textureID;
 	struct {
 		int r;
 		int g;
 		int b;
 	} color;
-	int rotation;
+	double rotation;
 	int alpha;
 	int options;
+	SDL_Rect clip;
 };
 
 class TextureManager {
@@ -83,6 +89,7 @@ public:
 private:
 	Renderer* mRenderer;
 	std::vector<LTexture*> textureCache;
+	std::vector<SDL_Texture*> mTextureCache;
 	friend class Renderer;
 };
 
