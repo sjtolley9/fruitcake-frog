@@ -21,3 +21,51 @@ if(MSVC)
 else()
 	target_compile_options(${PROJ_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/higo.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/higo.png
+)
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/path.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/path.png
+)
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/path2.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/path2.png
+)
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/profile.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/profile.png
+)
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/splash_logo.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/splash_logo.png
+)
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/splash_logo_small.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/splash_logo_small.png
+)
