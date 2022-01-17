@@ -5,7 +5,6 @@
 #include "SDL_ttf.h"
 
 SDL_Renderer* gRenderer;
-TTF_Font *gFont = NULL;
 
 LTexture::LTexture() {
 	//Initialize
@@ -81,31 +80,6 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
 	SDL_RenderCopyEx( mRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
-bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor ) {
-	// Free any preexisting texture
-	free();
-
-	// Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
-	if (textSurface == NULL) {
-		std::cout << "Unable to render text surface!" << std::endl;
-	} else {
-		// Create Texture
-		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface );
-		if ( mTexture == NULL ) {
-			std::cout << "That didn't seem to work!" << std::endl;
-		} else {
-			mWidth = textSurface->w;
-			mHeight = textSurface->h;
-		}
-
-		// Free old surface
-		SDL_FreeSurface( textSurface );
-	}
-
-	return mTexture != NULL;
-}
-
 int LTexture::getWidth() {
 	return mWidth;
 }
@@ -132,11 +106,13 @@ TextureThing::TextureThing() {
 TextureThing::~TextureThing() {
 }
 
-TextureThing::TextureThing(int id) {
+TextureThing::TextureThing(int id, int width, int height) {
 	textureID = id;
 	color = {255, 255, 255};
 	alpha = 255;
 	options = 0;
+	w = width;
+	h = height;
 }
 
 void TextureThing::setColor(int r, int g, int b) {

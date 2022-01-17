@@ -116,3 +116,29 @@ void Renderer::renderThing(TextureThing tt, int x, int y) {
 		texture->setAlpha(255);
 	}
 }
+
+void Renderer::newRenderThing(TextureThing tt, int x, int y) {
+	SDL_Texture* texture = textureManager.mTextureCache[tt.textureID];
+	SDL_Rect* clipper = NULL;
+
+	SDL_Rect renderQuad = {x,y,tt.w,tt.h};
+
+	if (tt.options & 1) {
+		SDL_SetTextureColorMod(texture, tt.color.r, tt.color.g, tt.color.b);
+	}
+	if (tt.options & 2) {
+		SDL_SetTextureAlphaMod(texture, tt.alpha);
+	}
+	if (tt.options & 4) {
+		clipper = &tt.clip;
+	}
+
+	SDL_RenderCopyEx(mRenderer, texture, clipper, &renderQuad, tt.rotation, NULL, SDL_FLIP_NONE);
+
+	if (tt.options & 1) {
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+	}
+	if (tt.options & 2) {
+		SDL_SetTextureAlphaMod(texture, 255);
+	}
+}

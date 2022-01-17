@@ -22,11 +22,13 @@ int main()
 {
 	frogRenderer.init();
 
-	TextureThing splashThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"));
-	TextureThing pathThing(frogRenderer.textureManager.createTexture("assets/path.png"));
-	TextureThing mapTileThing(frogRenderer.textureManager.createTexture("assets/CL_DEMO.png"));
+	TextureThing splashThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"),1,1);
+	TextureThing pathThing(frogRenderer.textureManager.createTexture("assets/path.png"),1,1);
+	TextureThing mapTileThing(frogRenderer.textureManager.createTexture("assets/CL_DEMO.png"),32,32);
 	SDL_Rect rectangle = {0,0,32,32};
 	mapTileThing.setClip(rectangle);
+	mapTileThing.setColor(255,0,0);
+	mapTileThing.setAlpha(120);
 
 	int debugCounter = 0;
 	bool debugTick = false;
@@ -72,7 +74,7 @@ int main()
 		}
 
 		frogRenderer.renderThing(splashThing, 0, 0);
-		frogRenderer.renderThing(mapTileThing, x-16, y-16);
+		frogRenderer.newRenderThing(mapTileThing, x-16, y-16);
 		
 		frogRenderer.presentScreen();
 

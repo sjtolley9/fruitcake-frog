@@ -20,9 +20,6 @@ class LTexture
 
         //Loads image at specified path
         bool loadFromFile( std::string path );
-        
-        //Creates image from font string
-        bool loadFromRenderedText( std::string textureText, SDL_Color textColor );
 
         //Deallocates texture
         void free();
@@ -56,7 +53,7 @@ class LTexture
 class TextureThing {
 public:
 	TextureThing();
-	TextureThing(int);
+	TextureThing(int, int, int);
 	~TextureThing();
 
 	void setColor(int,int,int);
@@ -74,6 +71,8 @@ public:
 	int alpha;
 	int options;
 	SDL_Rect clip;
+	int w;
+	int h;
 };
 
 class TextureManager {
@@ -107,6 +106,7 @@ public:
 	void setScreenSize(int w, int h);
 
 	void renderThing(TextureThing, int x, int y);
+	void newRenderThing(TextureThing, int x, int y);
 
 	TextureManager textureManager;
 private:
