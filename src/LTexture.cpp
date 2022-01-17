@@ -1,5 +1,7 @@
-#include <iostream>
 #include "Renderer.hpp"
+
+#include <iostream>
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -94,83 +96,4 @@ void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue ) {
 
 void LTexture::setAlpha( Uint8 alpha ) {
 	SDL_SetTextureAlphaMod( mTexture, alpha );
-}
-
-TextureThing::TextureThing() {
-	textureID = -1;
-	color = {255, 255, 255};
-	alpha = 255;
-	options = 0;
-}
-
-TextureThing::~TextureThing() {
-}
-
-TextureThing::TextureThing(int id, int width, int height) {
-	textureID = id;
-	color = {255, 255, 255};
-	alpha = 255;
-	options = 0;
-	w = width;
-	h = height;
-}
-
-void TextureThing::setColor(int r, int g, int b) {
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	options |= 1;
-}
-
-void TextureThing::setAlpha(int al) {
-	alpha = al;
-	options |= 2;
-}
-
-void TextureThing::setClip(SDL_Rect cl) {
-	clip = cl;
-	options |= 4;
-}
-
-TextureManager::TextureManager() {
-	mRenderer = NULL;
-}
-
-TextureManager::~TextureManager() {
-	mRenderer = NULL;
-}
-
-bool TextureManager::init(Renderer* renderer) {
-	mRenderer = renderer;
-
-	return mRenderer != NULL;
-}
-
-int TextureManager::createTexture( std::string path) {
-	SDL_Texture* newTexture = NULL;
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	int w, h;
-	
-	if ( loadedSurface == NULL ) {
-		std::cout << "Unable to load texture at : " << path << std::endl;
-	} else {
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
-
-		newTexture = SDL_CreateTextureFromSurface( mRenderer->mRenderer, loadedSurface );
-		if ( newTexture == NULL ) {
-			std::cout << "Texture couldn't load" << std::endl;
-		} else {
-			w = loadedSurface->w;
-			h = loadedSurface->h;
-		}
-
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	LTexture* fruit = new LTexture( mRenderer->mRenderer, newTexture, w, h );
-
-	textureCache.push_back(fruit);
-	mTextureCache.push_back(newTexture);
-
-	return textureCache.size()-1;
 }
