@@ -17,7 +17,7 @@ target_link_libraries(${PROJ_NAME} ${CONAN_LIBS})
 target_include_directories(${PROJ_NAME} PRIVATE headers)
 
 if(MSVC)
-	target_compile_options(${PROJ_NAME} PRIVATE /W4 /WX)
+	# target_compile_options(${PROJ_NAME} PRIVATE /W4 /WX)
 else()
 	target_compile_options(${PROJ_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()

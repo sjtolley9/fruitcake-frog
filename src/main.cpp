@@ -7,7 +7,7 @@
 #define DEBUG_OUTPUT true
 
 #include <iostream>
-#include "SDL.h" 
+#include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "Renderer.hpp"
@@ -18,8 +18,10 @@ Renderer frogRenderer;
 
 std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-int main()
+int main(int argc, char** argv)
 {
+	(void)argc;
+	(void)argv;
 	frogRenderer.init();
 
 	TextureThing splashThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"),1,1);
