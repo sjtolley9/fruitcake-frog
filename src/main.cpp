@@ -24,11 +24,6 @@ int main()
 
 	TextureThing splashThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"),1,1);
 	TextureThing pathThing(frogRenderer.textureManager.createTexture("assets/path.png"),1,1);
-	TextureThing mapTileThing(frogRenderer.textureManager.createTexture("assets/CL_DEMO.png"),32,32);
-	SDL_Rect rectangle = {0,0,32,32};
-	mapTileThing.setClip(rectangle);
-	mapTileThing.setColor(255,0,0);
-	mapTileThing.setAlpha(120);
 
 	int debugCounter = 0;
 	bool debugTick = false;
@@ -59,11 +54,6 @@ int main()
 			debugTick = true;
 		}
 
-		int x,y;
-		SDL_GetMouseState(&x, &y);
-		rectangle.x = x-16; rectangle.y = y-16;
-		mapTileThing.setClip(rectangle);
-
 		// RENDERING
 		frogRenderer.clearScreen();
 
@@ -74,7 +64,6 @@ int main()
 		}
 
 		frogRenderer.renderThing(splashThing, 0, 0);
-		frogRenderer.newRenderThing(mapTileThing, x-16, y-16);
 		
 		frogRenderer.presentScreen();
 
