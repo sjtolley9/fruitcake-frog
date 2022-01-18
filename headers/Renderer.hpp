@@ -9,8 +9,6 @@
 #include "TextureThing.hpp"
 #include "TextureManager.hpp"
 
-class Renderer;
-
 class Renderer {
 public:
 	Renderer();

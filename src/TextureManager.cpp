@@ -1,8 +1,10 @@
-#include <iostream>
-#include "Renderer.hpp"
+#include "TextureManager.hpp"
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+
+#include "Renderer.hpp"
 
 TextureManager::TextureManager() {
 	mRenderer = NULL;

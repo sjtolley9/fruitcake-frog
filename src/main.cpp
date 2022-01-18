@@ -8,12 +8,13 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "Renderer.hpp"
 
-#include <random>
+#include "Renderer.hpp"
 
 #define GHOSTS 896*20
 
