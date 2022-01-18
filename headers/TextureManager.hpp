@@ -1,6 +1,16 @@
 #pragma once
 
-#include "Renderer.hpp"
+#include <string>
+#include <vector>
+#include <iostream>
+
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
+
+class Renderer;
+
+#include "LTexture.hpp"
 
 class TextureManager {
 public:

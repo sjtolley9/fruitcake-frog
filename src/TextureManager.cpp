@@ -1,4 +1,5 @@
 #include "TextureManager.hpp"
+#include "Renderer.hpp"
 
 TextureManager::TextureManager() {
 	mRenderer = NULL;

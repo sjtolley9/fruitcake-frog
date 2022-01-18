@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer.hpp"
+#include "SDL.h"
 
 class TextureThing {
 public:

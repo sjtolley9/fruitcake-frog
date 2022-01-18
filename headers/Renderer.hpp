@@ -1,13 +1,15 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include <iostream>
 
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
+#include "LTexture.hpp"
 #include "TextureManager.hpp"
-#include "TextureThing.hpp"
 #include "TextureThing.hpp"
 
 class Renderer {
