@@ -4,8 +4,6 @@
 
 #include "SDL.h"
 
-#include "Renderer.hpp"
-
 class Renderer;
 
 class TextureManager {
