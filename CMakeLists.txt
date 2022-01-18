@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-set(SOURCE_FILES src/main.cpp src/LTexture.cpp src/Renderer.cpp)
-set(HEADER_FILES headers/Renderer.hpp)
+set(SOURCE_FILES src/main.cpp src/TextureThing.cpp src/TextureManager.cpp src/Renderer.cpp)
+set(HEADER_FILES headers/TextureThing.hpp headers/Renderer.hpp headers/TextureManager.hpp)
 set(PROJ_NAME fcFrog)
 
 project(${PROJ_NAME})

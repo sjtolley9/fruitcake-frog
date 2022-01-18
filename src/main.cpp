@@ -17,16 +17,7 @@
 
 #define GHOSTS 896*20
 
-SDL_Rect gSpriteClips[ 40*31 ];
-
 Renderer frogRenderer;
-
-std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-typedef struct Ghost {
-	double x;
-	double y;
-} Ghost;
 
 int main(int argc, char** argv)
 {
@@ -42,7 +33,6 @@ int main(int argc, char** argv)
 
 	TextureThing splashThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"),362,480);
 	TextureThing pathThing(frogRenderer.textureManager.createTexture("assets/path.png"),16,16);
-	TextureThing pathThing2(frogRenderer.textureManager.createTexture("assets/path2.png"),16,16);
 	TextureThing ghostyThing(frogRenderer.textureManager.createTexture("assets/ghosty.png"),32,32);
 	
 	ghostyThing.setAlpha(100);
@@ -79,12 +69,7 @@ int main(int argc, char** argv)
 		// RENDERING
 		frogRenderer.clearScreen();
 
-		for (int i = 0; i < 640; i+=16) {
-			for (int j = 0; j < 480; j+=16) {
-//				frogRenderer.renderThing(pathThing, i, j);
-			}
-		}
-
+		// Render Splash Logo
 		frogRenderer.renderThing(splashThing, 0, 0);
 
 		frogRenderer.presentScreen();
@@ -96,7 +81,7 @@ int main(int argc, char** argv)
 			debugTick = false;
 		}
 
-		//std::cout << frameTime << " passed in compute. " << 1000/(1+frameTime) << "fps. Waiting " << (16-frameTime) << std::endl;
+		// Delay if less than 16 milliseconds
 		if (frameTime < 16) {
 			SDL_Delay(16-(SDL_GetTicks()-currentTime));
 		}
