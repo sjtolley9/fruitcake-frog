@@ -69,3 +69,11 @@ add_custom_command(
 				${CMAKE_CURRENT_SOURCE_DIR}/assets/splash_logo_small.png
 				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/splash_logo_small.png
 )
+
+add_custom_command(
+		TARGET ${PROJ_NAME}
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${CMAKE_CURRENT_SOURCE_DIR}/assets/ghosty.png
+				${CMAKE_CURRENT_BINARY_DIR}/bin/assets/ghosty.png
+)

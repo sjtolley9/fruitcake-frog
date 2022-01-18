@@ -7,65 +7,22 @@
 
 class Renderer;
 
-//Texture wrapper class
-class LTexture
-{
-    public:
-        //Initializes variables
-        LTexture();
-		LTexture( SDL_Renderer*, SDL_Texture*, int w, int h);
-
-        //Deallocates memory
-        ~LTexture();
-
-        //Loads image at specified path
-        bool loadFromFile( std::string path );
-
-        //Deallocates texture
-        void free();
-
-        //Set color modulation
-        void setColor( Uint8 red, Uint8 green, Uint8 blue );
-
-        //Set blending
-        void setBlendMode( SDL_BlendMode blending );
-
-        //Set alpha modulation
-        void setAlpha( Uint8 alpha );
-        
-        //Renders texture at given point
-        void render( int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE );
-
-        //Gets image dimensions
-        int getWidth();
-        int getHeight();
-
-    private:
-        //The actual hardware texture
-        SDL_Texture* mTexture;
-		SDL_Renderer* mRenderer;
-
-        //Image dimensions
-        int mWidth;
-        int mHeight;
-};
-
 class TextureThing {
 public:
 	TextureThing();
 	TextureThing(int, int, int);
 	~TextureThing();
 
-	void setColor(int,int,int);
+	void setColor(Uint8,Uint8,Uint8);
 	void setAlpha(int);
 	void setRotation(double);
 	void setClip(SDL_Rect);
 
 	int textureID;
 	struct {
-		int r;
-		int g;
-		int b;
+		Uint8 r;
+		Uint8 g;
+		Uint8 b;
 	} color;
 	double rotation;
 	int alpha;
@@ -87,7 +44,7 @@ public:
 
 private:
 	Renderer* mRenderer;
-	std::vector<LTexture*> textureCache;
+	//std::vector<LTexture*> textureCache;
 	std::vector<SDL_Texture*> mTextureCache;
 	friend class Renderer;
 };
@@ -106,7 +63,6 @@ public:
 	void setScreenSize(int w, int h);
 
 	void renderThing(TextureThing, int x, int y);
-	void newRenderThing(TextureThing, int x, int y);
 
 	TextureManager textureManager;
 private:

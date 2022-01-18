@@ -97,27 +97,6 @@ void Renderer::setScreenSize(int w, int h) {
 }
 
 void Renderer::renderThing(TextureThing tt, int x, int y) {
-	LTexture* texture = textureManager.textureCache[tt.textureID];
-	SDL_Rect* clipper = NULL;
-	if (tt.options & 1) {
-		texture->setColor(tt.color.r, tt.color.g, tt.color.b);
-	}
-	if (tt.options & 2) {
-		texture->setAlpha(tt.alpha);
-	}
-	if (tt.options & 4) {
-		clipper = &tt.clip;
-	}
-	texture->render(x,y,clipper,tt.rotation);
-	if (tt.options & 1) {
-		texture->setColor(255,255,255);
-	}
-	if (tt.options & 2) {
-		texture->setAlpha(255);
-	}
-}
-
-void Renderer::newRenderThing(TextureThing tt, int x, int y) {
 	SDL_Texture* texture = textureManager.mTextureCache[tt.textureID];
 	SDL_Rect* clipper = NULL;
 
