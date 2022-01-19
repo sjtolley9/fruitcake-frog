@@ -38,8 +38,10 @@ int main(int argc, char** argv)
 	
 	ghostyThing.setAlpha(100);
 
+	#if DEBUG_OUTPUT
 	int debugCounter = 0;
 	bool debugTick = false;
+	#endif
 
 	Uint32 frameTime = 0, elapsedTime = 0, currentTime = SDL_GetTicks(), oldTime = SDL_GetTicks();
 
@@ -48,10 +50,12 @@ int main(int argc, char** argv)
 	SDL_Event e;
 
 	while (playing) {
+		// FRAME HANDLING
 		currentTime = SDL_GetTicks();
 		elapsedTime = currentTime - oldTime;
 		oldTime = currentTime;
 
+		// EVENT HANDLING
 		while (SDL_PollEvent(&e)) {
 			switch(e.type){
 				case SDL_QUIT:
@@ -62,33 +66,39 @@ int main(int argc, char** argv)
 			}
 		}
 
+
 		// GAME LOGIC
 
+
+		// RENDERING
+		frogRenderer.clearScreen();
+		frogRenderer.renderThing(splashThing, 0, 0);// Render Splash Logo
+		frogRenderer.presentScreen();
+
+
+		#if DEBUG_OUTPUT // DEBUG INFO
 		debugCounter += elapsedTime;
+
 		if (DEBUG_OUTPUT && debugCounter > 1000) {
 			debugCounter -= 1000;
 			debugTick = true;
 		}
 
-		// RENDERING
-		frogRenderer.clearScreen();
-
-		// Render Splash Logo
-		frogRenderer.renderThing(splashThing, 0, 0);
-
-		frogRenderer.presentScreen();
-
-		frameTime = SDL_GetTicks() - currentTime;
-
 		if ( debugTick ) {
 			std::cout << "Elapsed Time: " << elapsedTime << " | Frame Time: " << frameTime << std::endl;
 			debugTick = false;
 		}
+    
+	 	#endif
+		
+    
+    		// DELAY
+		frameTime = SDL_GetTicks() - currentTime;
 
-		// Delay if less than 16 milliseconds
 		if (frameTime < 16) {
-			SDL_Delay(16-(SDL_GetTicks()-currentTime));
+			SDL_Delay(16-frameTime); // Delay if less than 16 milliseconds
 		}
+
 	}
 
 	frogRenderer.close();
