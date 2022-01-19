@@ -7,17 +7,23 @@
 
 #include "Renderer.hpp"
 
+#include "Scene.hpp"
+#include "Scenes/GamePlayScene.hpp"
+
 #define DEBUG_OUTPUT true
 #define GHOSTS 896*20
 
 class Application {
+	public:
+		Application();
+		void init();
+		void eventHandling();
+		void render();
+		void update();
+		void run();
 	private:
 		// Rendering
 		Renderer frogRenderer;
-		// Textures
-		TextureThing splashThing;
-		TextureThing pathThing;
-		TextureThing ghostyThing;
 		// Random Number Stuff
 		std::default_random_engine generator;
 		std::uniform_real_distribution<double> distribution;
@@ -32,10 +38,9 @@ class Application {
 		Uint32 frameTime, elapsedTime, currentTime, oldTime;
 		// Game loop things
 		bool playing;
-	public:
-		Application();
-		void init();
-		void eventHandling();
-		void render();
-		void run();
+		// Scenes
+		std::vector<Scene*> scenes;
+		int currentScene;
+		friend class Scene;
+		friend class GamePlayScene;
 };

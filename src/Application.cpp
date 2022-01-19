@@ -22,15 +22,17 @@ Application::Application () {
 	debugCounter = 0;
 	debugTick = false;
 	#endif
+	// Scenes
 }
 
 void Application::init () {
-	// Textures
-	splashThing = TextureThing(frogRenderer.textureManager.createTexture("assets/splash_logo_small.png"),362,480);
-	pathThing = TextureThing(frogRenderer.textureManager.createTexture("assets/path.png"),16,16);
-	ghostyThing = TextureThing(frogRenderer.textureManager.createTexture("assets/ghosty.png"),32,32);
+	// Scenes
+	scenes.push_back(new GamePlayScene(this));
+	
+	for(Scene* s : scenes)
+		s->OnCreate();
 
-	ghostyThing.setAlpha(100);
+	currentScene = 0;
 }
 
 void Application::eventHandling () {
@@ -49,9 +51,11 @@ void Application::eventHandling () {
 }
 
 void Application::render () {
-	frogRenderer.clearScreen();
-	frogRenderer.renderThing(splashThing, 0, 0);// Render Splash Logo
-	frogRenderer.presentScreen();
+	scenes[currentScene]->OnRender();
+}
+
+void Application::update () {
+	scenes[currentScene]->OnUpdate();
 }
 
 void Application::run () {
@@ -68,6 +72,7 @@ void Application::run () {
 
 
 		// GAME LOGIC
+		update();
 
 
 		// RENDERING
