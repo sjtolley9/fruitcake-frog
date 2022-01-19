@@ -8,12 +8,13 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "Renderer.hpp"
 
-#include <random>
+#include "Renderer.hpp"
 
 #define GHOSTS 896*20
 
@@ -49,11 +50,19 @@ int main(int argc, char** argv)
 	SDL_Event e;
 
 	while (playing) {
+		// FRAME HANDLING
+		currentTime = SDL_GetTicks();
+		elapsedTime = currentTime - oldTime;
+		oldTime = currentTime;
+
 		// EVENT HANDLING
-		while (SDL_PollEvent(&e) != 0) {
-			if (e.type == SDL_QUIT) {
-				playing = false;
-			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+		while (SDL_PollEvent(&e)) {
+			switch(e.type){
+				case SDL_QUIT:
+					playing = false;
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+					break;
 			}
 		}
 
@@ -79,14 +88,11 @@ int main(int argc, char** argv)
 			std::cout << "Elapsed Time: " << elapsedTime << " | Frame Time: " << frameTime << std::endl;
 			debugTick = false;
 		}
+    
 	 	#endif
 		
-
-		// FRAME HANDLING
-		currentTime = SDL_GetTicks();
-		elapsedTime = currentTime - oldTime;
-		oldTime = currentTime;
-
+    
+    // DELAY
 		frameTime = SDL_GetTicks() - currentTime;
 
 		if (frameTime < 16) {
