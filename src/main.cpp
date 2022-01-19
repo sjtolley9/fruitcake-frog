@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 	 	#endif
 		
     
-    // DELAY
+    		// DELAY
 		frameTime = SDL_GetTicks() - currentTime;
 
 		if (frameTime < 16) {
