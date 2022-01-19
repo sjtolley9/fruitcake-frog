@@ -89,7 +89,9 @@ int main(int argc, char** argv)
 
 		frameTime = SDL_GetTicks() - currentTime;
 
-		if (frameTime < 16) SDL_Delay(16-(SDL_GetTicks()-currentTime)); // Delay if less than 16 milliseconds
+		if (frameTime < 16) {
+			SDL_Delay(16-frameTime); // Delay if less than 16 milliseconds
+		}
 
 	}
 
