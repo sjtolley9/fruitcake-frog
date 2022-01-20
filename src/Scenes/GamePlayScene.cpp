@@ -1,7 +1,5 @@
 #include "Scenes/GamePlayScene.hpp"
 
-#include <iostream>
-
 #include "Application.hpp"
 
 GamePlayScene::GamePlayScene(Application* app)

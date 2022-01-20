@@ -20,9 +20,8 @@ class Application {
 		void eventHandling();
 		void render();
 		void update();
-		void changeSceneTo(int sceneIndex);
 		void pushBackScene(Scene& scene);
-		void removeScene(int sceneIndex);
+		void pushBackScene(Scene* scene);
 		void popBackScene();
 		void run();
 	private:

@@ -1,7 +1,6 @@
 #include "Application.hpp"
 
 #include <iostream>
-#include <cstdint>
 
 Application::Application () {
 	// Rendering
@@ -28,7 +27,7 @@ Application::Application () {
 
 void Application::init () {
 	// Scenes
-	scenes.push_back(new GamePlayScene(this));
+	pushBackScene(new GamePlayScene(this));
 	
 	for(Scene* s : scenes)
 		s->OnCreate();
@@ -59,21 +58,20 @@ void Application::update () {
 	scenes[currentScene]->OnUpdate(elapsedTime);
 }
 
-void Application::changeSceneTo(int sceneIndex){
-	if(sceneIndex < 0 || sceneIndex >= scenes.size()) {
-		std::cout<<"scene index non-existend\n";
-		return;
-	}
-	currentScene = sceneIndex;
+void Application::pushBackScene(Scene* scene){
+	scenes.push_back(scene);
+	currentScene++;
 }
+
 void Application::pushBackScene(Scene& scene){
 	scenes.push_back(&scene);
+	currentScene++;
 }
-void Application::removeScene(int sceneIndex){
-	scenes.erase(scenes.begin()+sceneIndex);
-}
+
 void Application::popBackScene(){
 	scenes.pop_back();
+	if(scenes.size() > 0)
+		currentScene--;
 }
 
 void Application::run () {
