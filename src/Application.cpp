@@ -59,6 +59,23 @@ void Application::update () {
 	scenes[currentScene]->OnUpdate(elapsedTime);
 }
 
+void Application::changeSceneTo(int sceneIndex){
+	if(sceneIndex < 0 || sceneIndex >= scenes.size()) {
+		std::cout<<"scene index non-existend\n";
+		return;
+	}
+	currentScene = sceneIndex;
+}
+void Application::pushBackScene(Scene& scene){
+	scenes.push_back(&scene);
+}
+void Application::removeScene(int sceneIndex){
+	scenes.erase(scenes.begin()+sceneIndex);
+}
+void Application::popBackScene(){
+	scenes.pop_back();
+}
+
 void Application::run () {
 	playing = true;
 
