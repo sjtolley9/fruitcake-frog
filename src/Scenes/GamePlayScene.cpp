@@ -17,7 +17,7 @@ void GamePlayScene::OnCreate(){
 	ghostyThing.setAlpha(100);
 }
 
-void GamePlayScene::OnUpdate(){
+void GamePlayScene::OnUpdate(Uint32 elapsedTime){
 }
 
 void GamePlayScene::OnRender(){

@@ -1,6 +1,7 @@
 #include "Application.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 Application::Application () {
 	// Rendering
@@ -55,7 +56,7 @@ void Application::render () {
 }
 
 void Application::update () {
-	scenes[currentScene]->OnUpdate();
+	scenes[currentScene]->OnUpdate(elapsedTime);
 }
 
 void Application::run () {

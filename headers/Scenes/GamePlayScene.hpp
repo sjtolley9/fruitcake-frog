@@ -13,6 +13,6 @@ class GamePlayScene : public Scene {
 	public:
 		GamePlayScene(Application* app);
 		void OnCreate();
-		void OnUpdate();
+		void OnUpdate(uint32_t elapsedTime);
 		void OnRender();
 };
